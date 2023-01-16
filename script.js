@@ -205,7 +205,7 @@ console.log(`passwordArray: ${passwordArray}`)
 // Function for getting a random element from an array
 
 function getRandom(arr) {
-  let randomIndex = Math.floor(Math.random() * passwordArray.length);
+  let randomIndex = Math.floor(Math.random() * arr.length);
   let randomElement = arr[randomIndex];
   return randomElement;
 }
@@ -213,12 +213,18 @@ function getRandom(arr) {
 
 // Function to generate password with user input
 function generatePassword() {
+ 
+
 for (index=0; index<passwordLength; index++){
   var calculation = getRandom(passwordArray);
   result.push(calculation);
 }
-console.log(result);
+
+
+return result.join ("");
 }
+
+
 
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
@@ -226,10 +232,7 @@ var generateBtn = document.querySelector('#generate');
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
-  console.log(result);
-  
   var passwordText = document.querySelector('#password');
-
   passwordText.value = password;
 }
 
