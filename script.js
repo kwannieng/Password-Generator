@@ -88,7 +88,7 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-let passwordArray = [specialCharacters.concat(numericCharacters, lowerCasedCharacters,upperCasedCharacters)];
+let passwordArray = specialCharacters.concat(numericCharacters, lowerCasedCharacters,upperCasedCharacters);
 console.log (passwordArray)
 
 
@@ -97,13 +97,28 @@ let needSpecialCharacters = true;
 let needNumbers = true;
 let needUppercase = true;
 let needLowercase = true;
-let password = [];
+let result =[];
 
 
 // Function to prompt user for password options
 function getPasswordOptions() {
   
   passwordLength = prompt("How many characters you would like your password to have?");
+
+  if (passwordLength < 6){
+    alert ("Password should contain at least 6 characters.");
+    return 
+  }
+
+  if (passwordLength > 30){
+    alert ("Password should not contain more that 30 characters.");
+    return 
+  }
+
+  if (isNaN(passwordLength)){
+    alert ("Please enter a number.");
+    return 
+  }
 
   needSpecialCharacters = confirm ("Click OK to confirm you want to have Special Characters in your password.");
 
@@ -112,19 +127,6 @@ function getPasswordOptions() {
   needUppercase = confirm ("Click OK to confirm you want to have Uppercase Characters in your password.")
   
   needLowercase = confirm ("Click OK to confirm you want to have Lowercase Characters in your password.")
-}
-
-getPasswordOptions()
-
-console.log(passwordLength)
-console.log(needSpecialCharacters)
-console.log(needNumbers)
-console.log(needUppercase)
-console.log(needLowercase)
-
-
-// Function for getting a random element from an array
-function getRandom() {
 
   if (needSpecialCharacters == true && needNumbers == true && needUppercase == true && needLowercase == true){
 
@@ -187,30 +189,36 @@ function getRandom() {
     passwordArray = specialCharacters.concat(lowerCasedCharacters);
 
   } else ( alert("Plaese at least select one type of character for your password."))
+
 }
 
-getRandom()
+getPasswordOptions()
 
-console.log(passwordArray)
+console.log(`passwordLength: ${passwordLength}`)
+console.log(`needSpecialCharacters: ${needSpecialCharacters}`)
+console.log(`needNumbers: ${needNumbers}`)
+console.log(`needUppercase: ${needUppercase}`)
+console.log(`needLowercase: ${needLowercase}`)
+console.log(`passwordArray: ${passwordArray}`)
+
+
+// Function for getting a random element from an array
+
+function getRandom(arr) {
+  let randomIndex = Math.floor(Math.random() * passwordArray.length);
+  let randomElement = arr[randomIndex];
+  return randomElement;
+}
+
 
 // Function to generate password with user input
-
-
-let randomIndex=0;
-
 function generatePassword() {
-
-  randomIndex = Math.floor(Math.random()*passwordLength);
-
-  password = passwordArray[randomIndex];
-
-  return password;
-
+for (index=0; index<passwordLength; index++){
+  var calculation = getRandom(passwordArray);
+  result.push(calculation);
 }
-
-generatePassword()
-
-console.log(randomIndex)
+console.log(result);
+}
 
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
@@ -218,6 +226,8 @@ var generateBtn = document.querySelector('#generate');
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
+  console.log(result);
+  
   var passwordText = document.querySelector('#password');
 
   passwordText.value = password;
